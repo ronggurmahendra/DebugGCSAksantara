@@ -6,6 +6,10 @@ var mongodb = require("mongodb");
 var app = express();
 app.use(bodyParser.json());
 
+// Create link to Angular build directory
+var distDir = __dirname + "/dist/";
+app.use(express.static(distDir));
+
 
 var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
