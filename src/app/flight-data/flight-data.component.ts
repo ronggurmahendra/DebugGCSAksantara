@@ -33,9 +33,9 @@ export class FlightDataComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    // requestAnimationFrame(() => {
-    //   this.animateAll();
-    // });
+    requestAnimationFrame(() => {
+      this.animateAll();
+    });
     this.render3d();
   }
 
@@ -179,8 +179,8 @@ export class FlightDataComponent implements OnInit {
         render();
       });
 
-      // airplane.rotation.y = self.convert(self.roll);
-      // airplane.rotation.z = -1 * self.convert(self.yaw);
+      airplane.rotation.y = self.convert(self.roll);
+      airplane.rotation.z = -1 * self.convert(self.yaw);
     }
     requestAnimationFrame(() => {
       render();
