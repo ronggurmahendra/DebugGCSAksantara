@@ -15,8 +15,6 @@ app.use('/api', route);
 let distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 
-
-let port = server.address().port;
 let mLabDB = "mongodb+srv://aksantara:asusrampage6@aksantara-vskbl.mongodb.net/aksantara?retryWrites=true&w=majority";
 let localDB = "mongodb://localhost:27017/aksantara";
 
@@ -29,7 +27,7 @@ try {
 
 // Callback function jika berhasil connect ke database
 mongoose.connection.on('connected', () => {
-    console.log('connected to Aksantara Database on port: ' + port);
+    console.log('connected to Aksantara Database on port:');
 });
 
 // Callback function jika gagal connect ke database
@@ -40,5 +38,6 @@ mongoose.connection.on('error', (err) => {
 });
 
 let server = app.listen(process.env.PORT || 8080, function () {
+    let port = server.address().port;
     console.log("App now running on port", port);
 });
