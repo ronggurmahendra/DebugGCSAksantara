@@ -8,11 +8,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FlightdataService {
+  private url = "https://aksantara3301.herokuapp.com/";
 
   constructor(private httpClient: HttpClient) { }
 
   getFlightRecords(): Observable<FlightRecord[]> {
-    return this.httpClient.get<FlightRecord[]>('http://localhost:3000/api/flightdatas')
+    return this.httpClient.get<FlightRecord[]>(this.url+'api/flightdatas')
       .pipe(map(res => { return res }));
   }
 
@@ -20,7 +21,7 @@ export class FlightdataService {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'aplication/json');
 
-    return this.httpClient.post('http://localhost:3000/api/' + url, data, {headers: headers})
+    return this.httpClient.post(this.url+'api/' + url, data, {headers: headers})
     .pipe(map(res => { return res }));
   }
 
