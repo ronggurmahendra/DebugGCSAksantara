@@ -10,12 +10,13 @@ let app = express();
 app.use(cors());
 app.use(bodyparser.json());
 app.use('/api', route);
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Create link to Angular build directory
-var distDir = __dirname + "/dist/";
+let distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 
+
+let port = server.address().port;
 let mLabDB = "mongodb+srv://aksantara:asusrampage6@aksantara-vskbl.mongodb.net/aksantara?retryWrites=true&w=majority";
 let localDB = "mongodb://localhost:27017/aksantara";
 
@@ -39,6 +40,5 @@ mongoose.connection.on('error', (err) => {
 });
 
 let server = app.listen(process.env.PORT || 8080, function () {
-    let port = server.address().port;
     console.log("App now running on port", port);
 });
