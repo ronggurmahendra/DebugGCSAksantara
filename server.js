@@ -27,7 +27,7 @@ try {
 
 // Callback function jika berhasil connect ke database
 mongoose.connection.on('connected', () => {
-    console.log('connected to Aksantara Database on port:');
+    console.log('connected to Aksantara Database');
 });
 
 // Callback function jika gagal connect ke database
