@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class FlightdataService {
   private url = "https://aksantara3301.herokuapp.com/";
   // private url = "http://localhost:8080/";
