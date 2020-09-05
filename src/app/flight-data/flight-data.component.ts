@@ -33,15 +33,17 @@ export class FlightDataComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    // requestAnimationFrame(() => {
-    //   this.animateAll();
-    // });
-    // this.render3d();
+    requestAnimationFrame(() => {
+      this.animateAll();
+    });
+
+    setInterval(() => {
+      this.getData();
+    }, 200);
+    this.render3d();
   }
 
   public animateAll() {
-    this.getData();
-
     anime({
       targets: "#arrow-degree",
       rotate: this.yaw,
