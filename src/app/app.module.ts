@@ -5,11 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { FlightDataComponent } from './flight-data/flight-data.component';
+import { MapComponent } from './map/map.component';
+import { WaypointEditorComponent } from './waypoint-editor/waypoint-editor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FlightDataComponent
+    FlightDataComponent,
+    MapComponent,
+    WaypointEditorComponent
   ],
   imports: [
     BrowserModule,

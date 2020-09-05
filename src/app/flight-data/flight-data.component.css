@@ -16,10 +16,10 @@
 }
 
 .map {
-    width: 1030px;
-    height: 650px;
+    width: 1045px;
+    height: 635px;
     float: right;
-    background-color: cornflowerblue;
+    /* background-color: cornflowerblue; */
     /* border: 2px solid orangered; */
 }
 
