@@ -40,7 +40,7 @@ export class FlightDataComponent implements OnInit {
     setInterval(() => {
       this.getData();
     }, 200);
-    this.render3d();
+    // this.render3d();
   }
 
   public animateAll() {
