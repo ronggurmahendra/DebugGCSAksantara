@@ -33,9 +33,9 @@ export class FlightDataComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    requestAnimationFrame(() => {
-      this.animateAll();
-    });
+    // requestAnimationFrame(() => {
+    //   this.animateAll();
+    // });
     // this.render3d();
   }
 
