@@ -33,6 +33,7 @@ import { LineString } from 'ol/geom'
 import { features } from 'process';
 import { MavlinkService } from '../services/mavlink.service';
 import { FlightdataService } from '../services/flightdata.service';
+import { Input } from '@angular/core';
 //import { atan } from 'math'
 @Component({
   selector: 'app-map',
@@ -41,7 +42,7 @@ import { FlightdataService } from '../services/flightdata.service';
 })
 
 export class MapComponent implements OnInit {
-
+  @Input() isMap = true;
   collectionCordinate: number[] = [];
 
   constructor(

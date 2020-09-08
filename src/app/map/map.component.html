@@ -7,6 +7,6 @@
   </head>
   <body>
     <div id="map" class="map"></div>
-    <!-- <button (click)="collectWaypoint()">Kirim Waypoint</button> -->
+    <button *ngIf="isMap" (click)="collectWaypoint()">Kirim Waypoint</button>
   </body>
 </html>

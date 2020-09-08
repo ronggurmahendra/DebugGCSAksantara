@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
 })
 
 export class FlightdataService {
-  // private url = "https://aksantara3301.herokuapp.com/";
-  private url = "http://localhost:8080/";
+  private url = "https://aksantara3301.herokuapp.com/";
+  // private url = "http://localhost:8080/";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -29,10 +29,6 @@ export class FlightdataService {
 
   sendFlightRecord(data) {
     return this.sendData('flightdata', data);
-  }
-
-  sendRecord(data) {
-    return this.sendData('sendparam', data);
   }
 
   sendWaypoint(data) {
