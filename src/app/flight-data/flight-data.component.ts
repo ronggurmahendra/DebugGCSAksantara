@@ -27,7 +27,7 @@ export class FlightDataComponent implements OnInit {
   public flightdata = [];
 
   constructor(private flightDataService: FlightdataService) { }
-  isMap = false;
+  public isMap = false;
   ngOnInit(): void {
 
   }
