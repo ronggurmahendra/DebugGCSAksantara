@@ -7,7 +7,7 @@
 }
 
 .flight-data {
-    width: 320px;
+    width: 24%;
     height: 635px;
     float: left;
     background-color: coral;
@@ -16,7 +16,7 @@
 }
 
 .map {
-    width: 1045px;
+    width: 76%;
     height: 635px;
     float: right;
     /* background-color: cornflowerblue; */

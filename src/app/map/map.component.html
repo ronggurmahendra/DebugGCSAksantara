@@ -1,12 +1,10 @@
-<!doctype html>
 <html lang="en">
   <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.3.1/css/ol.css" type="text/css">
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.3.1/build/ol.js"></script>
-    
   </head>
   <body>
     <div id="map" class="map"></div>
-    <button *ngIf="isMap" (click)="collectWaypoint()">Kirim Waypoint</button>
+    <button class="waypoint-btn" *ngIf="isMap" (click)="collectWaypoint()">Kirim Waypoint</button>
   </body>
 </html>

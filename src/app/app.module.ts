@@ -10,6 +10,8 @@ import { MapComponent } from './map/map.component';
 import { WaypointEditorComponent } from './waypoint-editor/waypoint-editor.component';
 import { MainComponent } from './main/main.component';
 import { MissionComponent } from './mission/mission.component';
+import { HeaderComponent } from './header/header.component';
+import { ParameterComponent } from './parameter/parameter.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { MissionComponent } from './mission/mission.component';
     WaypointEditorComponent,
     MainComponent,
     MissionComponent,
+    HeaderComponent,
+    ParameterComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,7 +31,8 @@ import { MissionComponent } from './mission/mission.component';
     RouterModule.forRoot([
       { path: '', component: MainComponent },
       { path: 'flight-data', component: FlightDataComponent },
-      { path: 'mission', component: MissionComponent }
+      { path: 'mission', component: MissionComponent },
+      { path: 'parameter', component: ParameterComponent }
     ])
   ],
   providers: [],

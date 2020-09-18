@@ -3,17 +3,12 @@
     height: 70px;
     margin: 0 auto;
     background-color: #192E54;
-    vertical-align: middle;
     position: relative;
-}
-
-.header img {
-    margin-left: 20px;
+    padding-left: 20px;
 }
 
 .container {
-    height: 100%;
-    margin-top: 90px;
+    margin-top: 70px;
     display: inline-grid;
     grid-template-columns: auto auto auto;
     justify-content: center;
@@ -24,7 +19,7 @@
 
 .flight-data, .mission, .parameter {
     width: 300px;
-    height: 400px;
+    height: 450px;
     border-radius: 10px;
 }
 
@@ -40,8 +35,8 @@
     background-color: #B5B3EE;
 }
 
-a {
-    padding: 10px 20px 10px 20px;
+.flight-data a, .mission a, .parameter a {
+    padding: 5px 15px 5px 15px;
     display: inline-block;
     margin: 0 auto;
     text-decoration: none;
@@ -52,13 +47,12 @@ a {
     font-family: 'Kanit', sans-serif;
 }
 
-.container img {
+.flight-data img, .mission img, .parameter img {
     width: 220px;
     display: block;
     height: 220px;
     margin: 0 auto;
-    margin-bottom: 70px;
-    /* border: 1px solid red; */
+    margin-bottom: 15px;
 }
 
 .flight-data img {
