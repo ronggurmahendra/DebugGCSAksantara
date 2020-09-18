@@ -1,3 +1,4 @@
+//test i ni coba" 18 - 9 - 2020
 import 'ol/ol.css';
 import Tile from 'ol/layer/Tile' ;
 import Map from 'ol/Map' ;
