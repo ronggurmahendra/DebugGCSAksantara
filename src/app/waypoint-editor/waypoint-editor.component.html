@@ -1,32 +1,16 @@
-<ul class = "heroes">
-    <span class = "badge">
-      Command
-    </span>
-    <span class = "badge">
-      longitude
-    </span>
-    <span class = "badge">
-      latitude
-    </span>
-    <span class = "badge">
-      altitude
-    </span>
-  </ul>
-  <ul class = "heroes">
-    <li *ngFor = "let wp of waypoints">
-    
-      <span class = "badge">
-       {{wp.Command}}
-      </span>
-      <span class = "badge">
-        {{wp.longitude}}
-      </span>
-      <span class = "badge">
-        {{wp.latitude}}
-      </span>
-      <span class = "badge">
-        {{wp.altitude}}
-      </span>
-    </li>
-</ul>
-  
+<table id="customers">
+  <tr>
+    <th>Command</th>
+    <th>longitude</th>
+    <th>latitude</th>
+    <th>altitude</th>
+    <th>frame</th>
+  </tr>
+  <tr *ngFor = "let wp of waypoints">
+      <td>{{wp.Command}}</td>
+      <td>{{wp.longitude}}</td>
+      <td>{{wp.latitude}}</td>
+      <td>{{wp.altitude}}</td>
+      <td>{{wp.frame}}</td>
+  </tr>
+</table>

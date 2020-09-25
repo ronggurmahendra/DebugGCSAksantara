@@ -1,4 +1,3 @@
-//test i ni coba" 18 - 9 - 2020
 import 'ol/ol.css';
 import Tile from 'ol/layer/Tile' ;
 import Map from 'ol/Map' ;
@@ -23,19 +22,17 @@ import {Icon} from 'ol/style';
 
 import {Draw, Modify, Snap} from 'ol/interaction';
 import {Circle as CircleStyle, Fill, Stroke, Style} from 'ol/style';
-//import { publicDecrypt } from 'crypto';
+
 
 import 'ol/ol.css';
 import { ObjectWaypoint } from '../models/waypointClass';
 import { WaypointService } from '../services/waypoint.service';
 import { markTimeline } from 'console';
-//import * from '../waypoint.service'
 import { LineString } from 'ol/geom'
 import { features } from 'process';
 import { MavlinkService } from '../services/mavlink.service';
 import { FlightdataService } from '../services/flightdata.service';
 import { Input } from '@angular/core';
-//import { atan } from 'math'
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -44,7 +41,6 @@ import { Input } from '@angular/core';
 
 export class MapComponent implements OnInit {
   @Input() isMap = true;
-  collectionCordinate: number[] = [];
 
   constructor(
     private waypointService: WaypointService, 
@@ -54,21 +50,22 @@ export class MapComponent implements OnInit {
   
   ngOnInit(): void {
     this.MavlinkService.initDummy()
-    this.initilizeMap(this.waypointService, this.MavlinkService, this.flightDataService, this.collectionCordinate)
+    this.initilizeMap(this.waypointService, this.MavlinkService, this.flightDataService,this.isMap)
   }
   
   /* CODINGAN AFIF */
+  
   collectWaypoint() {
-      /* buat ngirim waypoint ke server */
-      this.flightDataService.sendWaypoint(this.collectionCordinate)
+      // buat ngirim waypoint ke server 
+      this.waypointService.sendWaypoint()
         .subscribe(response => {
           console.log(response);
         });
-  }
+  } 
   /* ------------ */
 
-  initilizeMap (waypointService, MavlinkService, flightDataService, collectionCordinate) {
-    
+  initilizeMap (waypointService, MavlinkService, flightDataService,OnMission) {
+    var lenAwal = -1; //buar pas diinisialisasi dia pasti salah dan masuk ke refresh mission 
 
     //untuk icon pesawat
     var wpFeature = []
@@ -101,23 +98,6 @@ export class MapComponent implements OnInit {
     var waypointLayer = new VectorLayer({
       source : waypointSource
     });
-    //untuk line 
-    /* //dummy line
-    var coordinae1 = fromLonLat([107.57358558756334, -6.9793586630298705])
-    var coordinae2 = fromLonLat([107.57930763258868, -6.982516535831422])
-    var lineFeature = new Feature({
-      geometry : new LineString([coordinae1,coordinae2])
-    });
-    lineFeature.setStyle(
-      new Style({
-        stroke: new Stroke({
-          color: '#000000',
-          width: 3
-        })
-      })
-    );
-    */
-   //untuk line
     var lineFeature = []
     var lineSource = new VectorSource({
       features : lineFeature
@@ -150,26 +130,50 @@ export class MapComponent implements OnInit {
 
     // fitur wp on click
     map.on('singleclick', function (evt){ 
-      //console.log("datadummmy",MavlinkService.getyaw())
-      //console.log('---------------------------------------')
-      //console.log('mapConsole',evt.coordinate);
-      var Coordinate = toLonLat(evt.coordinate); //coordinate openlayer to coordinate 
-      //console.log('mapConsole',Coordinate);
-      //var waypoint: [any];
-      //waypoint.push(Coordinate);
-      //console.log(waypoint);
-      var longitude = Coordinate[0];
-      var latitude = Coordinate[1];
+      if (OnMission){
+        var Coordinate = toLonLat(evt.coordinate); //coordinate openlayer to coordinate 
+        var longitude = Coordinate[0];
+        var latitude = Coordinate[1];
+        
+        /* CODINGAN AFIF */
+        // Kumpulin kordinat nanti baru dikirim lewat fungsi collectWaypoint
+        //collectionCordinate.push({latitude, longitude});
+        /* ------------- */
+        //console.log(collectionCordinate);
+        waypointService.add(new ObjectWaypoint('Waypoint',longitude,latitude,100,'Relative',false)); // nambah wp ke service
+        //refreshMission()
+      }
+    })
 
-      /* CODINGAN AFIF */
-      // Kumpulin kordinat nanti baru dikirim lewat fungsi collectWaypoint
-      collectionCordinate.push({latitude, longitude});
-      /* ------------- */
+    setInterval(function refreshPlane() {
+      //console.log("getmission : ",flightDataService.getMission())
+      planeSource.clear()
+      var temp_planeFeature = new Feature({
+        geometry : new Point(fromLonLat(MavlinkService.getCoordinate()))//masi pake data dummy
+      });
       
-      waypointService.add(new ObjectWaypoint('Waypoint',longitude,latitude,100,'Relative',false)); // nambah wp ke service
+      temp_planeFeature.setStyle(new Style({
+          image : new Icon(({
+          src: 'assets/plane.svg',
+          imgSize: [600, 600],
+          scale: 0.1,
+          rotation : flightDataService.getFlightRecords().yaw
+        }))
+      }));
+      planeSource.addFeature(temp_planeFeature)
+      //cek misi beda atau ngga
+      
+      if (!(lenAwal == waypointService.getCoordinateArray().length)){
+        //console.log("refreshing Mission")
+        refreshMission()
+      }
+      lenAwal = waypointService.getCoordinateArray().length
+    },100)
 
+
+    function refreshMission() {
+      
       var len = waypointService.getCoordinateArray().length;
-      
       for(var i = 0; i< len; i++){
         //console.log(waypointService.getCoordinateArray()[i])
         var temp_waypoint = new Feature({
@@ -189,23 +193,7 @@ export class MapComponent implements OnInit {
           temp_waypoint
         );//push feature ke list feature
       };
-      //console.log('waypointService from map component', waypointService.getCoordinateArray())
-      
-      //console.log ("wpFeature : ", wpFeature)
-      //console.log ("temp_waypoint : ", temp_waypoint)
-      //var temp = wp 
-      //this.ArrayWaypoint = wp
-      
-      //console.log(this.ArrayWaypoint)
-
-      //bikin line
-      //waypointService.getCoordinateArray()
-      //console.log("len:",len)
-      //var lineCoordinate1 = fromLonLat(waypointService.getCoordinateArray()[0]); 
-      
       if (len > 1){ //cek dulu apakah sudah ada lebih dari 1 wp
-
-        //console.log('make a line')
         for (var j = 1 ; j < len; j++){
           //console.log('j',j)
             var lineCoordinate1 = fromLonLat(waypointService.getCoordinateArray()[j-1])
@@ -244,7 +232,7 @@ export class MapComponent implements OnInit {
               crossOrigin: 'anonymous',
               src: 'assets/arrow1.svg',
               imgSize: [400, 300],
-              scale : 0.1,
+              scale : 0.07,
               rotation : Math.atan2((lineCoordinate2[0] - lineCoordinate1[0]),(lineCoordinate2[1] - lineCoordinate1[1]))
               }))
             }));
@@ -256,7 +244,7 @@ export class MapComponent implements OnInit {
       
       //refresh source line
       lineSource.clear()
-
+  
       lineSource.addFeatures(lineFeature)
       lineFeature = []
       
@@ -264,30 +252,9 @@ export class MapComponent implements OnInit {
       waypointSource.clear();
       
       waypointSource.addFeatures(wpFeature);
-      wpFeature = []
-    });
-
-    //setInterval(refreshPlaneLayer(),1000)
-    //refreshPlaneLayer(){
-    //  planeSource.clear();
-    //  planeSource.addFeatures(datadarimavlink);//nanti ngefetch data dari mavlink 
-    //}
-    
-    setInterval(function refreshPlane() {
-      planeSource.clear()
-      var temp_planeFeature = new Feature({
-        geometry : new Point(fromLonLat(MavlinkService.getCoordinate()))
-      });
-      
-      temp_planeFeature.setStyle(new Style({
-          image : new Icon(({
-          src: 'assets/plane.svg',
-          imgSize: [600, 600],
-          scale: 0.1,
-          rotation : MavlinkService.getyaw()
-        }))
-      }));
-      planeSource.addFeature(temp_planeFeature)
-    },100)
-  };  
+      wpFeature = [];
+    };
+  }
+  
 }
+

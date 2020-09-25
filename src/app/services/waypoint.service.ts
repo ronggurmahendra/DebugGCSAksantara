@@ -3,18 +3,26 @@ import { Observable, of } from 'rxjs';
 import { ObjectWaypoint } from '../models/waypointClass';
 import { WAYPOINTS } from '../models/WAYPOINTS'
 //import fs from 
+import { FlightdataService } from "../services/flightdata.service"
+//import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FlightRecord } from '../models/flightrecord';
+import { map } from 'rxjs/operators';
+//import { Observable } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 
 export class WaypointService {
-
+  
+  constructor(private httpClient: HttpClient, private flightDataService: FlightdataService) {console.log('Initialize WaypoinitService') }
   waypoints = WAYPOINTS;
-
+  
   add(waypoint: ObjectWaypoint) {
     this.waypoints.push(waypoint);
     //console.log('totalWaypoints in service', this.waypoints.length)
-    //console.log('added to service', waypoint.getCoordinate())
+    //console.log('added to service', waypoint.g   etCoordinate())
     //console.log('finalWaypoint',this.waypoints)
   }
   
@@ -46,7 +54,23 @@ export class WaypointService {
   //save(filename:string){} 
   
   getWaypoints(): Observable<ObjectWaypoint[]> {
-    console.log('wkwk')
     return of(this.waypoints);
+  }
+  sendWaypoint() {
+    //console.log("masuksini")
+    //console.log(this.getCoordinateArray())
+    var temp: any[];
+    temp = []
+    for(let i = 0;i<this.getCoordinateArray().length;i++){
+      let arrTotal = this.getCoordinateArray() 
+      //console.log("arrTotal:",arrTotal)
+      let latitude = arrTotal [i][1];
+      let longitude = arrTotal [i][0];
+      temp.push({latitude, longitude});
+      //console.log("latitude:",latitude)
+      //console.log(temp)
+    }
+
+    return (this.flightDataService.sendWaypoint(temp));
   }
 }
