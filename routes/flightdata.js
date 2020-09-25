@@ -29,7 +29,7 @@ router.get('/flightdatas', (req, res, next) => {
     // FlightData.find((err, flightdatas) => {
     //     res.json(flightdatas);
     // });
-     // -----------------  DATABASE ON  ----------------- //
+    // -----------------  DATABASE ON  ----------------- //
 
     // ----------------- WITHOUT DATABASE ----------------- //
     res.json(data);
