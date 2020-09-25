@@ -105,11 +105,20 @@ router.post("/waypoint", (req, res, next) => {
 });
 
 router.get("/waypoints", (req, res, next) => {
+    console.log("get request for mission");
+    /*
     Waypoint.find((err, waypoints) => {
-        let len = waypoints.length - 1;
-        res.json(waypoints[len]);
-    });
-
+        console.log("sending mission")
+        res.json(waypoints);
+    });*/
+    Waypoint.find({})
+    .exec(function(err,waypoints){
+        if(err){
+            console.log("error sending mission")
+        }else {
+            res.json(waypoint)
+        }
+    })
     // Waypoint.watch()
     //     .on('change', waypoints => {
     //         // let len = waypoints.length - 1;
