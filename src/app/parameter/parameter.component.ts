@@ -29,24 +29,28 @@ export class ParameterComponent implements OnInit {
   public getParameters() {
     this.isClicked = true;
 
-    this.flightDataService.sendBtnParamStatus({ isClicked: this.isClicked })        
+    this.flightDataService.getMission()
       .subscribe(response => {
         console.log(response);
       });
 
-    setTimeout(() => {
-      this.flightDataService.sendBtnParamStatus({ isClicked: !this.isClicked })        
-      .subscribe(response => {
-        console.log(response);
-      });
-    }, 6000);
+    // this.flightDataService.sendBtnParamStatus({ isClicked: this.isClicked })        
+    //   .subscribe(response => {
+    //     console.log(response);
+    //   });
 
-    setTimeout(() => {
-      this.flightDataService.getParameterRecords()
-        .subscribe((response) => {
-          console.log(response);
-        });
-    }, 20000);
+    // setTimeout(() => {
+    //   this.flightDataService.sendBtnParamStatus({ isClicked: !this.isClicked })        
+    //   .subscribe(response => {
+    //     console.log(response);
+    //   });
+    // }, 6000);
+
+    // setTimeout(() => {
+    //   this.flightDataService.getParameterRecords()
+    //     .subscribe((response) => {
+    //       console.log(response);
+    //     });
+    // }, 25000);
   } 
-
 }

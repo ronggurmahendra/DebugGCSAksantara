@@ -40,6 +40,7 @@ router.get('/flightdatas', (req, res, next) => {
 
 router.post('/flightdata', (req, res, next) => {
     // ----------------- WITHOUT DATABASE ----------------- //
+    // console.log(req.body);
     data.pop();
     data.push({
         time_boot_ms: req.body.time_boot_ms,

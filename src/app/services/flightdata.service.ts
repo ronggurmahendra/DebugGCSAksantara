@@ -6,6 +6,7 @@ import { MissionComponent } from '../mission/mission.component';
 
 import { FlightRecord } from '../models/flightrecord';
 import { parameterRecord } from '../models/parameterRecords';
+import { ObjectWaypoints } from '../models/ObjectWaypoint';
 
 @Injectable({
   providedIn: 'root'
@@ -26,12 +27,12 @@ export class FlightdataService {
     return this.httpClient.get<parameterRecord[]>(this.url+'api/parameters')
       .pipe(map(res => { return res }));
   }
-  /*
-  getMission(): Observable <Waypoint>{
+  
+  getMission(): Observable <ObjectWaypoints[]>{
     //console.log("client asking data")
-    return this.httpClient.get<Waypoint>(this.url+'api/waypoint')
+    return this.httpClient.get<ObjectWaypoints[]>(this.url+'api/waypoints')
     .pipe(map(res => { return res }));
-  }*/
+  }
 
 
   sendData(url, data) {
