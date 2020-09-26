@@ -3,6 +3,8 @@ const router = express.Router();
 
 const FlightData = require('../models/flightrecord');
 const Waypoint = require("../models/waypoint");
+const Parameter = require("../models/parameter");
+const btnParamStatus = require("../models/btnParam");
 
 // ----------------- WITHOUT DATABASE ----------------- //
 let data = [{
@@ -112,11 +114,11 @@ router.get("/waypoints", (req, res, next) => {
         res.json(waypoints);
     });*/
     Waypoint.find({})
-    .exec(function(err,waypoints){
+    .exec(function(err, waypoints){
         if(err){
             console.log("error sending mission")
         }else {
-            res.json(waypoint)
+            res.json(waypoints)
         }
     })
     // Waypoint.watch()
@@ -127,5 +129,68 @@ router.get("/waypoints", (req, res, next) => {
     //         res.json(waypoints);
     //     });
 });
+
+/* BUAT PARAMETER */
+router.post("/parameter", (req, res, next) => {
+    let parameter = new Parameter({ children: req.body });
+    // let parameter = new Parameter({ 
+    //     param_value: req.body.param_value,
+    //     param_count: req.body.param_count,
+    //     param_index: req.body.param_index,
+    //     param_id: req.body.param_id,
+    //     param_type: req.body.param_type
+    
+    // });
+
+    parameter.save((err) => {
+        if (err) {
+            res.json({msg: 'Failed to added parameter ', err: err});
+        } else {
+            res.json({msg: 'Successfully added parameter'});
+        }
+    });
+
+    // console.log(req.body);
+});
+
+router.get("/parameters", (req, res, next) => {
+    Parameter.find({})
+    .exec(function(err, parameter){
+        if(err){
+            console.log("Error getting parameter");
+        }else {
+            res.json(parameter);
+        }
+    })
+});
+/* BUAT PARAMETER */
+
+/* BUAT statusBtnParameter */
+let btnId = {};
+
+router.post("/btnparam", (req, res, next) => {
+    let statusBtnParameter = new btnParamStatus({ isClicked: req.body.isClicked });
+
+    statusBtnParameter.save((err) => {
+        if (err) {
+            res.json({msg: 'Failed to change status button parameter', err: err});
+        } else {
+            res.json({msg: 'Successfully to change status button parameter'});
+        }
+    });
+
+    btnId = statusBtnParameter._id;
+});
+
+router.get("/btnparams", (req, res, next) => {
+    btnParamStatus.findById(btnId, (err, btnStatus) => {
+        if(err){
+            console.log("Error getting button status");
+        }else {
+            res.json(btnStatus);
+        }
+    });
+});
+/* BUAT statusBtnParameter */
 
 module.exports = router;

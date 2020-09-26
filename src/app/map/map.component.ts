@@ -54,7 +54,7 @@ export class MapComponent implements OnInit {
   }
   
   /* CODINGAN AFIF */
-  
+
   collectWaypoint() {
       // buat ngirim waypoint ke server 
       this.waypointService.sendWaypoint()
