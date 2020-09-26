@@ -10,8 +10,8 @@ import { MissionComponent } from '../mission/mission.component';
 })
 
 export class FlightdataService {
-  private url = "https://aksantara3301.herokuapp.com/";
-  //private url = "http://localhost:8080/";
+  //private url = "https://aksantara3301.herokuapp.com/";
+  private url = "http://localhost:8080/";
 
   constructor(private httpClient: HttpClient) { console.log('Initialize flightdata Service')}
 
@@ -19,12 +19,14 @@ export class FlightdataService {
     return this.httpClient.get<FlightRecord[]>(this.url+'api/flightdatas')
       .pipe(map(res => { return res }));
   }
+  
   /*
   getMission(): Observable <Waypoint>{
     //console.log("client asking data")
     return this.httpClient.get<Waypoint>(this.url+'api/waypoint')
     .pipe(map(res => { return res }));
-  }*/
+  }
+  */
 
 
   sendData(url, data) {

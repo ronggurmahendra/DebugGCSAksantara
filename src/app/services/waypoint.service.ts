@@ -36,8 +36,10 @@ export class WaypointService {
   }
 
   remove(n : number){
+    console.log("deleting Wp :", n);
     let temp_waypoints = this.waypoints
     this.waypoints = temp_waypoints.slice(0,n-1).concat(temp_waypoints.slice(n , -1)) 
+    //console.log(this.getCoordinateArray().length)
   }
 
   getCoordinateOn(n:number){
@@ -72,5 +74,6 @@ export class WaypointService {
     }
 
     return (this.flightDataService.sendWaypoint(temp));
+
   }
 }

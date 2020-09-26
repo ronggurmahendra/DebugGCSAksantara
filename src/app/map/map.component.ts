@@ -66,7 +66,7 @@ export class MapComponent implements OnInit {
 
   initilizeMap (waypointService, MavlinkService, flightDataService,OnMission) {
     var lenAwal = -1; //buar pas diinisialisasi dia pasti salah dan masuk ke refresh mission 
-
+    var counterMission = 0;
     //untuk icon pesawat
     var wpFeature = []
     var planeFeature = new Feature({
@@ -184,10 +184,11 @@ export class MapComponent implements OnInit {
           color: '#00FF2B',
           crossOrigin: 'anonymous',
           src: 'assets/vectorpoint.svg',
-          imgSize: [50, 50],
+          imgSize: [60, 60],
           scale : 0.5
+
           }))
-        })); //style wp nya
+        })); //style wp nya*/
         
         wpFeature.push(
           temp_waypoint

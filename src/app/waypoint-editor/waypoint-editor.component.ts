@@ -29,4 +29,19 @@ export class WaypointEditorComponent implements OnInit {
       .subscribe(waypoints =>
         this.waypoints = waypoints);
   }
+
+  DeleteMissionUnit(wp){
+    for(var i = 0; i< this.waypointService.getCoordinateArray().length; i++){
+      //console.log("this.waypointService.getCoordinateArray()[i] :",this.waypointService.getCoordinateArray()[i])
+      //console.log("wp.getCoordinate() :",wp.getCoordinate())
+      console.log(i);
+      console.log(this.waypointService.getCoordinateArray()[i])
+      console.log(wp.getCoordinate())
+      if ((this.waypointService.getCoordinateArray()[i][0] == wp.getCoordinate()[0])&&(this.waypointService.getCoordinateArray()[i][1] == wp.getCoordinate()[1])){
+        this.waypointService.remove(i);
+      } 
+
+    }
+    
+  }
 }

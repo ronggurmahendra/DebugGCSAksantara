@@ -12,6 +12,7 @@ import { MainComponent } from './main/main.component';
 import { MissionComponent } from './mission/mission.component';
 import { HeaderComponent } from './header/header.component';
 import { ParameterComponent } from './parameter/parameter.component';
+import { MissionConsoleComponent } from './mission-console/mission-console.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ParameterComponent } from './parameter/parameter.component';
     MissionComponent,
     HeaderComponent,
     ParameterComponent,
+    MissionConsoleComponent,
   ],
   imports: [
     BrowserModule,

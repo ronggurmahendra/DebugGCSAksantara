@@ -1,5 +1,6 @@
 export class ObjectWaypoint {
     //field 
+    public id : number; //urutan
     public Command : string;
     public longitude : number;
     public latitude: number;

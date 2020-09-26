@@ -5,6 +5,7 @@
     <th>latitude</th>
     <th>altitude</th>
     <th>frame</th>
+    <th>Delete</th>
   </tr>
   <tr *ngFor = "let wp of waypoints">
       <td>{{wp.Command}}</td>
@@ -12,5 +13,9 @@
       <td>{{wp.latitude}}</td>
       <td>{{wp.altitude}}</td>
       <td>{{wp.frame}}</td>
+      <td>
+        <button class="waypoint-btn" (click)="DeleteMissionUnit(wp)">X</button>
+      </td>
+      
   </tr>
 </table>
