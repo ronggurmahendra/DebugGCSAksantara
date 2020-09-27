@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { parameterRecord } from '../models/parameterRecords';
+import { parameterRecords } from '../models/parameterRecords';
 import { FlightdataService } from '../services/flightdata.service';
 
 @Component({
@@ -12,15 +12,24 @@ export class ParameterComponent implements OnInit {
 
   constructor(private flightDataService: FlightdataService) { }
 
-  private parameterRecords: parameterRecord[];
-  private parameterRecord: parameterRecord;
-  private param_count: number;
-  private param_id: number;
-  private param_index: number;
-  private param_type: number;
-  private param_value: number;
+  public parameters: parameterRecords = { 
+    _id: "",  
+    children: [{
+      param_count: 1,
+      param_id: "",
+      param_index: 1,
+      param_type: 1,
+      param_value: 1,
+    }]
+  }
 
-  private isClicked: boolean;
+  public param_count: number;
+  public param_id: number;
+  public param_index: number;
+  public param_type: number;
+  public param_value: number;
+
+  public isClicked: boolean = false;
 
   ngOnInit(): void {
 
@@ -29,28 +38,31 @@ export class ParameterComponent implements OnInit {
   public getParameters() {
     this.isClicked = true;
 
-    this.flightDataService.getMission()
+    this.flightDataService.sendBtnParamStatus({ isClicked: this.isClicked, timeToGet: false })        
       .subscribe(response => {
         console.log(response);
       });
 
-    // this.flightDataService.sendBtnParamStatus({ isClicked: this.isClicked })        
-    //   .subscribe(response => {
-    //     console.log(response);
-    //   });
+    setTimeout(() => {
+      this.flightDataService.getParameterRecords()
+        .subscribe((response) => {
+          this.parameters._id = response._id;
+          this.parameters.children = response.children;
+          console.log(this.parameters.children);
+        });
+    }, 25000);
+  }
 
-    // setTimeout(() => {
-    //   this.flightDataService.sendBtnParamStatus({ isClicked: !this.isClicked })        
-    //   .subscribe(response => {
-    //     console.log(response);
-    //   });
-    // }, 6000);
-
-    // setTimeout(() => {
-    //   this.flightDataService.getParameterRecords()
-    //     .subscribe((response) => {
-    //       console.log(response);
-    //     });
-    // }, 25000);
-  } 
+  public clearParameters() {
+    this.parameters = { 
+      _id: "",  
+      children: [{
+        param_count: 1,
+        param_id: "",
+        param_index: 1,
+        param_type: 1,
+        param_value: 1,
+      }]
+    }
+  }
 }

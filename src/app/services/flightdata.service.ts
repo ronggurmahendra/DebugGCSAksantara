@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { MissionComponent } from '../mission/mission.component';
 
 import { FlightRecord } from '../models/flightrecord';
-import { parameterRecord } from '../models/parameterRecords';
+import { parameterRecords } from '../models/parameterRecords';
 import { ObjectWaypoints } from '../models/ObjectWaypoint';
 
 @Injectable({
@@ -13,18 +13,18 @@ import { ObjectWaypoints } from '../models/ObjectWaypoint';
 })
 
 export class FlightdataService {
-  private url = "https://aksantara3301.herokuapp.com/";
-  // private url = "http://localhost:8080/";
+  // private url = "https://aksantara3301.herokuapp.com/";
+  private url = "http://localhost:8080/";
 
   constructor(private httpClient: HttpClient) { console.log('Initialize flightdata Service')}
 
-  getFlightRecords(): Observable<FlightRecord[]> {
-    return this.httpClient.get<FlightRecord[]>(this.url+'api/flightdatas')
+  getFlightRecords(): Observable<FlightRecord> {
+    return this.httpClient.get<FlightRecord>(this.url+'api/flightdatas')
       .pipe(map(res => { return res }));
   }
 
-  getParameterRecords(): Observable<parameterRecord[]> {
-    return this.httpClient.get<parameterRecord[]>(this.url+'api/parameters')
+  getParameterRecords(): Observable<parameterRecords> {
+    return this.httpClient.get<parameterRecords>(this.url+'api/parameters')
       .pipe(map(res => { return res }));
   }
   

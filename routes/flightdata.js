@@ -7,7 +7,7 @@ const Parameter = require("../models/parameter");
 const btnParamStatus = require("../models/btnParam");
 
 // ----------------- WITHOUT DATABASE ----------------- //
-let data = [{
+let data = {
     time_boot_ms: 0,
     pitch: 0,
     roll: 0,
@@ -21,7 +21,7 @@ let data = [{
     throtlle: 0,
     alt: 0,
     climb: 0
-}];
+};
 
 let defaultLen = data.length;
 // ----------------- WITHOUT DATABASE ----------------- //
@@ -40,31 +40,8 @@ router.get('/flightdatas', (req, res, next) => {
 
 router.post('/flightdata', (req, res, next) => {
     // ----------------- WITHOUT DATABASE ----------------- //
-    // console.log(req.body);
-    data.pop();
-    data.push({
-        time_boot_ms: req.body.time_boot_ms,
-        pitch: req.body.pitch,
-        roll: req.body.roll,
-        yaw: req.body.yaw,
-        rollspeed: req.body.rollspeed,
-        pitchspeed: req.body.pitchspeed,
-        yawspeed: req.body.yawspeed,
-        airspeed: req.body.airspeed,
-        groundspeed: req.body.groundspeed,
-        heading: req.body.heading,
-        throtlle: req.body.throtlle,
-        alt: req.body.alt,
-        climb: req.body.climb
-    });
-
-    let afterLen = data.length;
-
-    if (afterLen > defaultLen) {
-        res.json({msg: "Successfully added flightrecord"});
-    } else {
-        res.json({msg: "Failed to add flightrecord"});
-    }
+    data = req.body;
+    res.json({ success: "Success" });
      // ----------------- WITHOUT DATABASE ----------------- //
 
     // -----------------  DATABASE ON  ----------------- //
@@ -131,17 +108,10 @@ router.get("/waypoints", (req, res, next) => {
     //     });
 });
 
+let paramId = {};
 /* BUAT PARAMETER */
 router.post("/parameter", (req, res, next) => {
     let parameter = new Parameter({ children: req.body });
-    // let parameter = new Parameter({ 
-    //     param_value: req.body.param_value,
-    //     param_count: req.body.param_count,
-    //     param_index: req.body.param_index,
-    //     param_id: req.body.param_id,
-    //     param_type: req.body.param_type
-    
-    // });
 
     parameter.save((err) => {
         if (err) {
@@ -151,46 +121,32 @@ router.post("/parameter", (req, res, next) => {
         }
     });
 
-    // console.log(req.body);
+    paramId = parameter._id;
 });
 
 router.get("/parameters", (req, res, next) => {
-    Parameter.find({})
-    .exec(function(err, parameter){
+    Parameter.findById(paramId, (err, parameter) => {
         if(err){
-            console.log("Error getting parameter");
+            console.log("Error getting button status");
         }else {
             res.json(parameter);
         }
-    })
+    });
 });
 /* BUAT PARAMETER */
 
 /* BUAT statusBtnParameter */
-let btnId = {};
+let isClicked = false;
+let timeToGet = false;
 
 router.post("/btnparam", (req, res, next) => {
-    let statusBtnParameter = new btnParamStatus({ isClicked: req.body.isClicked });
-
-    statusBtnParameter.save((err) => {
-        if (err) {
-            res.json({msg: 'Failed to change status button parameter', err: err});
-        } else {
-            res.json({msg: 'Successfully to change status button parameter'});
-        }
-    });
-
-    btnId = statusBtnParameter._id;
+    isClicked = req.body.isClicked;
+    timeToGet = req.body.timeToGet;
+    res.json({ success: `Success to change state isClicked to: ${isClicked} and timeToGet to : ${timeToGet}` });
 });
 
 router.get("/btnparams", (req, res, next) => {
-    btnParamStatus.findById(btnId, (err, btnStatus) => {
-        if(err){
-            console.log("Error getting button status");
-        }else {
-            res.json(btnStatus);
-        }
-    });
+    res.json({ isClickedBtn: isClicked, timeToGet: timeToGet });
 });
 /* BUAT statusBtnParameter */
 

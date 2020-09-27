@@ -13,8 +13,24 @@ import { FlightdataService } from '../services/flightdata.service';
 })
 
 export class FlightDataComponent implements OnInit {
-  public flightrecords: FlightRecord[];
-  public flightrecord: FlightRecord;
+  public flightrecords: FlightRecord = {
+    _id: "",
+    time_boot_ms: 0,
+    pitch: 0,
+    roll: 0,
+    yaw: 0,
+    rollspeed: 0,
+    pitchspeed: 0,
+    yawspeed: 0,
+    airspeed: 0,
+    groundspeed: 0,
+    heading: 0,
+    throtlle: 0,
+    alt: 0,
+    climb: 0,
+    __v: 0,
+  }
+
   public pitch: number;
   public roll: number;
   public yaw: number;
@@ -106,13 +122,12 @@ export class FlightDataComponent implements OnInit {
     this.flightDataService.getFlightRecords()
     .subscribe(response => {
       this.flightrecords = response;
-      let index = this.flightrecords.length - 1;
-      this.yaw = (this.flightrecords[index].yaw * 180) / Math.PI;
-      this.roll = (this.flightrecords[index].roll * 180) / Math.PI;
-      this.pitch = this.flightrecords[index].pitch * 180 / Math.PI;
-      this.alt = this.flightrecords[index].alt;
-      this.groundspeed = this.flightrecords[index].groundspeed;
-      this.time = this.convertMS(this.flightrecords[index].time_boot_ms);
+      this.yaw = (this.flightrecords.yaw * 180) / Math.PI;
+      this.roll = (this.flightrecords.roll * 180) / Math.PI;
+      this.pitch = this.flightrecords.pitch * 180 / Math.PI;
+      this.alt = this.flightrecords.alt;
+      this.groundspeed = this.flightrecords.groundspeed;
+      this.time = this.convertMS(this.flightrecords.time_boot_ms);
 
       if (this.yaw < 0) {
         this.raw_yaw = Math.abs(this.yaw) + 180;

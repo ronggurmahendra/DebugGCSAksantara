@@ -1,2 +1,20 @@
 <app-header></app-header>
+<table *ngIf="parameters.children.length > 1">
+    <tr>
+        <th>Param Index</th>
+        <th>Param Name</th>
+        <th>Param Value</th>
+        <!-- <th>Param Count</th> -->
+        <th>Param Type</th>
+    </tr>
+
+    <tr *ngFor="let parameter of parameters.children">
+        <td>{{ parameter.param_index }}</td>
+        <td>{{ parameter.param_id }}</td>
+        <td>{{ parameter.param_value }}</td>
+        <!-- <td>{{ parameter.param_count }}</td> -->
+        <td>{{ parameter.param_type }}</td>
+    </tr>
+</table>
+<button class="clr-btn" (click)="clearParameters()">Hapus Parameter</button>
 <button class="parameter-btn" (click)="getParameters()">Ambil Parameter</button>
