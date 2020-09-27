@@ -13,8 +13,8 @@ import { ObjectWaypoints } from '../models/ObjectWaypoint';
 })
 
 export class FlightdataService {
-  // private url = "https://aksantara3301.herokuapp.com/";
-  private url = "http://localhost:8080/";
+  private url = "https://aksantara3301.herokuapp.com/";
+  // private url = "http://localhost:8080/";
 
   constructor(private httpClient: HttpClient) { console.log('Initialize flightdata Service')}
 
