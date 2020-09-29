@@ -1,20 +1,24 @@
 <app-header></app-header>
+<link href="https://fonts.googleapis.com/css2?family=Arvo:wght@700&display=swap" rel="stylesheet">
+
+<div class="buttonClass">
+    <button class="clr-btn" (click)="clearParameters()"><span>Hapus Parameter</span></button>
+    <button class="parameter-btn" (click)="getParameters()"><span>Ambil Parameter</span></button>
+    <button class="parameter-btn" (click)="sendParameters()"><span>Kirim Parameter</span></button>
+</div>
+
 <table *ngIf="parameters.children.length > 1">
     <tr>
-        <th>Param Index</th>
-        <th>Param Name</th>
-        <th>Param Value</th>
-        <!-- <th>Param Count</th> -->
-        <th>Param Type</th>
+        <th><p>Param Index</p></th>
+        <th><p>Param Name</p></th>
+        <th><p>Param Value</p></th>
+        <th><p>Param Type</p></th>
     </tr>
 
     <tr *ngFor="let parameter of parameters.children">
-        <td>{{ parameter.param_index }}</td>
-        <td>{{ parameter.param_id }}</td>
-        <td>{{ parameter.param_value }}</td>
-        <!-- <td>{{ parameter.param_count }}</td> -->
-        <td>{{ parameter.param_type }}</td>
+        <td><p>{{ parameter.param_index }}</p></td>
+        <td><p>{{ parameter.param_id }}</p></td>
+        <td><input type="number" [(ngModel)]="parameter.param_value" placeholder="{{ parameter.param_value }}"/></td>
+        <td><p>{{ parameter.param_type }}</p></td>
     </tr>
 </table>
-<button class="clr-btn" (click)="clearParameters()">Hapus Parameter</button>
-<button class="parameter-btn" (click)="getParameters()">Ambil Parameter</button>

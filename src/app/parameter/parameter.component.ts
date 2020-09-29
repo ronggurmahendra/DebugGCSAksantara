@@ -16,10 +16,10 @@ export class ParameterComponent implements OnInit {
     _id: "",  
     children: [{
       param_count: 1,
-      param_id: "",
-      param_index: 1,
+      param_id: "SYSID_THISMAV",
+      param_index: 0,
       param_type: 1,
-      param_value: 1,
+      param_value: 9,
     }]
   }
 
@@ -32,7 +32,20 @@ export class ParameterComponent implements OnInit {
   public isClicked: boolean = false;
 
   ngOnInit(): void {
+    this.flightDataService.getParameterRecords()
+    .subscribe((response) => {
+      this.parameters._id = response._id;
+      this.parameters.children = response.children;
+      console.log(this.parameters.children);
+    });
+  }
 
+  public sendParameters() {
+    console.log(this.parameters);
+    this.flightDataService.sendParameterRecords(this.parameters.children)
+      .subscribe(response => {
+        console.log(response);
+      });
   }
 
   public getParameters() {
