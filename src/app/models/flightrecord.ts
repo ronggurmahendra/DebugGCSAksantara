@@ -1,4 +1,4 @@
-export class FlightRecord {
+export interface FlightRecord {
     _id: string;
     time_boot_ms: number;
     pitch: number;

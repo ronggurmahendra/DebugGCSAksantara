@@ -1,0 +1,56 @@
+table {
+    width: 60%;
+    height: auto;
+    border: 4px solid #192E54;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+th {
+    background-color: #192E54;
+    color: white;
+}
+
+td {
+    text-align: center;
+}
+
+th {
+    padding: 5px;
+    width: 30px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+tr p, ::placeholder {
+    font-family: 'Arvo', serif;
+    font-size: 12px;
+}
+
+input {
+    width: 70%;
+    padding: 5px;
+}
+
+.buttonClass {
+    width: 60%;
+    height: auto;
+    margin: 0 auto;
+    text-align: center;
+}
+
+button {
+    background-color: #192E54;
+    margin: 30px 10px 0 0;
+    padding: 8px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+span {
+    font-size: 10px;
+    font-family: 'Arvo', serif;
+    color: white;
+}

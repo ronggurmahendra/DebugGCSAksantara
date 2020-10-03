@@ -168,7 +168,8 @@ export class MapComponent implements OnInit {
           src: 'assets/plane.svg',
           imgSize: [600, 600],
           scale: 0.1,
-          rotation : flightDataService.getFlightRecords().yaw
+          // rotation : flightDataService.getFlightRecords().yaw
+          rotation: 0
         }))
       }));
       planeSource.addFeature(temp_planeFeature)
