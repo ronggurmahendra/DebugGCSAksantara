@@ -49,12 +49,16 @@ export class MapComponent implements OnInit {
   ) { }
   
   ngOnInit(): void {
+    console.log(this.flightDataService.getMission().subscribe(response => {
+      console.log(response);
+    }))
     this.MavlinkService.initDummy()
     this.initilizeMap(this.waypointService, this.MavlinkService, this.flightDataService,this.isMap)
+    //this.waypointService.add(new ObjectWaypoint(16,0,10,0,1,107.5721, -6.9823,10,1,255,2,0,1,0));
   }
   
   /* CODINGAN AFIF */
-  
+
   collectWaypoint() {
       // buat ngirim waypoint ke server 
       this.waypointService.sendWaypoint()
@@ -130,6 +134,7 @@ export class MapComponent implements OnInit {
 
     // fitur wp on click
     map.on('singleclick', function (evt){ 
+      
       if (OnMission){
         var Coordinate = toLonLat(evt.coordinate); //coordinate openlayer to coordinate 
         var longitude = Coordinate[0];
@@ -140,8 +145,14 @@ export class MapComponent implements OnInit {
         //collectionCordinate.push({latitude, longitude});
         /* ------------- */
         //console.log(collectionCordinate);
-        waypointService.add(new ObjectWaypoint('Waypoint',longitude,latitude,100,'Relative',false)); // nambah wp ke service
-        //refreshMission()
+        if(!waypointService.getChangingHome()){
+          waypointService.add(new ObjectWaypoint(16,0,10,0,1,latitude,longitude,10,1,255,2,0,1,0)); // nambah wp ke service  
+          refreshMission()
+        } else {
+          waypointService.changingHomeProperties(new ObjectWaypoint(16,0,10,0,1,latitude,longitude,10,1,255,2,0,1,0));//ganti home
+          waypointService.changeHome();
+          refreshMission()
+        }
       }
     })
 
@@ -172,8 +183,9 @@ export class MapComponent implements OnInit {
 
 
     function refreshMission() {
-      
+      //console.log("refreshingnWP");
       var len = waypointService.getCoordinateArray().length;
+      //console.log(waypointService.getCoordinateArray());
       for(var i = 0; i< len; i++){
         //console.log(waypointService.getCoordinateArray()[i])
         var temp_waypoint = new Feature({
@@ -193,6 +205,7 @@ export class MapComponent implements OnInit {
         wpFeature.push(
           temp_waypoint
         );//push feature ke list feature
+
       };
       if (len > 1){ //cek dulu apakah sudah ada lebih dari 1 wp
         for (var j = 1 ; j < len; j++){
@@ -251,7 +264,7 @@ export class MapComponent implements OnInit {
       
       //refresh source wp
       waypointSource.clear();
-      
+      //console.log(wpFeature)
       waypointSource.addFeatures(wpFeature);
       wpFeature = [];
     };
