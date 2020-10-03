@@ -127,7 +127,7 @@ router.post("/parameter", (req, res, next) => {
 router.get("/parameters", (req, res, next) => {
     Parameter.findById(paramId, (err, parameter) => {
         if(err){
-            console.log("Error getting button status");
+            console.log("Error getting parameters from server");
         }else {
             res.json(parameter);
         }
@@ -136,17 +136,17 @@ router.get("/parameters", (req, res, next) => {
 /* BUAT PARAMETER */
 
 /* BUAT statusBtnParameter */
-let isClicked = false;
-let timeToGet = false;
+let getParamBtn = false;
+let sendParamBtn = false;
 
 router.post("/btnparam", (req, res, next) => {
-    isClicked = req.body.isClicked;
-    timeToGet = req.body.timeToGet;
-    res.json({ success: `Success to change state isClicked to: ${isClicked} and timeToGet to : ${timeToGet}` });
+    getParamBtn = req.body.getParamBtn;
+    sendParamBtn = req.body.sendParamBtn;
+    res.json({ success: `Success to change state getParamBtn to: ${getParamBtn} and sendParamBtn to : ${sendParamBtn}` });
 });
 
 router.get("/btnparams", (req, res, next) => {
-    res.json({ isClickedBtn: isClicked, timeToGet: timeToGet });
+    res.json({ getParamBtn: getParamBtn, sendParamBtn: sendParamBtn });
 });
 /* BUAT statusBtnParameter */
 

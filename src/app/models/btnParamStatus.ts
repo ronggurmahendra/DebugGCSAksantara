@@ -1,5 +1,5 @@
 export interface btnParamStatus {
     _id: string;
-    isClicked: boolean,
-    timeToGet: boolean
+    getParamBtn: boolean,
+    sendParamBtn: boolean
 }

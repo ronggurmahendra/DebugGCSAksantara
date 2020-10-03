@@ -29,7 +29,8 @@ export class ParameterComponent implements OnInit {
   public param_type: number;
   public param_value: number;
 
-  public isClicked: boolean = false;
+  public getParamBtn: boolean = false;
+  public sendParamBtn: boolean = false;
 
   ngOnInit(): void {
     this.flightDataService.getParameterRecords()
@@ -41,17 +42,24 @@ export class ParameterComponent implements OnInit {
   }
 
   public sendParameters() {
+    this.sendParamBtn = true;
+
     console.log(this.parameters);
     this.flightDataService.sendParameterRecords(this.parameters.children)
+      .subscribe(response => {
+        console.log(response);
+      });
+
+    this.flightDataService.sendBtnParamStatus({ getParamBtn: false, sendParamBtn: this.sendParamBtn })        
       .subscribe(response => {
         console.log(response);
       });
   }
 
   public getParameters() {
-    this.isClicked = true;
+    this.getParamBtn = true;
 
-    this.flightDataService.sendBtnParamStatus({ isClicked: this.isClicked, timeToGet: false })        
+    this.flightDataService.sendBtnParamStatus({ getParamBtn: this.getParamBtn, sendParamBtn: false })        
       .subscribe(response => {
         console.log(response);
       });
