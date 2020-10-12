@@ -85,7 +85,7 @@ router.post("/waypoint", (req, res, next) => {
 });
 
 router.get("/waypoints", (req, res, next) => {
-    console.log("get request for mission");
+    //console.log("get request for mission");
     /*
     Waypoint.find((err, waypoints) => {
         console.log("sending mission")

@@ -1,16 +1,39 @@
 <table id="customers">
   <tr>
     <th>Command</th>
-    <th>longitude</th>
-    <th>latitude</th>
-    <th>altitude</th>
+    <th>param1</th>
+    <th>param2</th>
+    <th>param3</th>
+    <th>param4</th>
+    <th>longitude(x)</th>
+    <th>latitude(y)</th>
+    <th>altitude(z)</th>
+    <th>target_system</th>
+    <th>target_component</th>
     <th>frame</th>
+    <th>mission_type</th>
+    <th>current</th>
+    <th>autocontinue</th>
+    <th>Delete</th>
   </tr>
   <tr *ngFor = "let wp of waypoints">
-      <td>{{wp.Command}}</td>
-      <td>{{wp.longitude}}</td>
-      <td>{{wp.latitude}}</td>
-      <td>{{wp.altitude}}</td>
+      <td>{{wp.command}}</td>
+      <td>{{wp.param1}}</td>
+      <td>{{wp.param2}}</td>
+      <td>{{wp.param3}}</td>
+      <td>{{wp.param4}}</td>
+      <td>{{wp.x}}</td>
+      <td>{{wp.y}}</td>
+      <td>{{wp.z}}</td>
+      <td>{{wp.target_system}}</td>
+      <td>{{wp.target_component}}</td>
       <td>{{wp.frame}}</td>
+      <td>{{wp.mission_type}}</td>
+      <td>{{wp.current}}</td>
+      <td>{{wp.autocontinue}}</td>
+      <td>
+        <button class="waypoint-btn" (click)="DeleteMissionUnit(wp)">X</button>
+      </td>
+      
   </tr>
 </table>

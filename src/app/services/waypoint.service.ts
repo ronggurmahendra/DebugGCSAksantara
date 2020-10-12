@@ -17,8 +17,25 @@ import { map } from 'rxjs/operators';
 export class WaypointService {
   
   constructor(private httpClient: HttpClient, private flightDataService: FlightdataService) {console.log('Initialize WaypoinitService') }
-  waypoints = WAYPOINTS;
   
+  public waypoints = WAYPOINTS;
+  public changingHome = false;
+  changeHome(){
+    if (this.changingHome == false){
+      this.changingHome = true;
+      console.log("ready to change Home")
+    }else{
+      this.changingHome = false; 
+      console.log("Home Changed")
+    }
+  }
+  getChangingHome(){
+    return this.changingHome;
+  }
+  changingHomeProperties(waypoint: ObjectWaypoint){
+    this.waypoints[0] = waypoint;
+  }
+
   add(waypoint: ObjectWaypoint) {
     this.waypoints.push(waypoint);
     //console.log('totalWaypoints in service', this.waypoints.length)
@@ -36,8 +53,10 @@ export class WaypointService {
   }
 
   remove(n : number){
+    console.log("deleting Wp :", n);
     let temp_waypoints = this.waypoints
     this.waypoints = temp_waypoints.slice(0,n-1).concat(temp_waypoints.slice(n , -1)) 
+    //console.log(this.getCoordinateArray().length)
   }
 
   getCoordinateOn(n:number){
@@ -49,6 +68,15 @@ export class WaypointService {
     for (var i = 0; i < (this.waypoints.length); i++){
       temp.push(this.waypoints[i].getCoordinate() );
     }
+    //console.log(temp);
+    return temp
+  }
+  getAllArray(){
+    let temp: number[][] = [];
+    for (var i = 0; i < (this.waypoints.length); i++){
+      temp.push(this.waypoints[i].getAll() );
+    }  
+    //console.log(temp);
     return temp
   }
   //save(filename:string){} 
@@ -61,16 +89,30 @@ export class WaypointService {
     //console.log(this.getCoordinateArray())
     var temp: any[];
     temp = []
-    for(let i = 0;i<this.getCoordinateArray().length;i++){
-      let arrTotal = this.getCoordinateArray() 
+    let arrTotal = this.getAllArray();
+    for(let i = 0;i<this.getAllArray().length;i++){
       //console.log("arrTotal:",arrTotal)
-      let latitude = arrTotal [i][1];
-      let longitude = arrTotal [i][0];
-      temp.push({latitude, longitude});
-      //console.log("latitude:",latitude)
-      //console.log(temp)
+      //let latitude = arrTotal [i][1];
+      //let longitude = arrTotal [i][0];
+      let command = arrTotal [i][0];
+      let param1 = arrTotal [i][1];
+      let param2 = arrTotal [i][2];
+      let param3 = arrTotal [i][3];
+      let param4 = arrTotal [i][4];
+      let x = arrTotal [i][5];
+      let y = arrTotal [i][6];
+      let z = arrTotal [i][7];
+      let target_system = arrTotal [i][8];
+      let target_component = arrTotal [i][9];
+      let frame = arrTotal [i][10];
+      let mission_type = arrTotal [i][11];
+      let current = arrTotal [i][12];
+      let autocontinue = arrTotal [i][13];
+
+      temp.push({command,param1,param2,param3,param4,x,y,z,target_system,target_component,frame,mission_type,current,autocontinue});
     }
 
     return (this.flightDataService.sendWaypoint(temp));
+
   }
 }
