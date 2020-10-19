@@ -16,9 +16,18 @@ import { map } from 'rxjs/operators';
 
 export class WaypointService {
   
-  constructor(private httpClient: HttpClient, private flightDataService: FlightdataService) {console.log('Initialize WaypoinitService') }
+  constructor(private httpClient: HttpClient, private flightDataService: FlightdataService) {
+    console.log('Initialize WaypoinitService')
+    
+    setInterval(function streamMission(){
+      console.log('retrieving data from database')
+      var objectWaypoints = flightDataService.getMission();
+      
+    },300); 
+  }
   
-  public waypoints = WAYPOINTS;
+  public waypoints = [];
+  public home
   public changingHome = false;
   changeHome(){
     if (this.changingHome == false){
@@ -33,7 +42,7 @@ export class WaypointService {
     return this.changingHome;
   }
   changingHomeProperties(waypoint: ObjectWaypoint){
-    this.waypoints[0] = waypoint;
+    this.home = waypoint;
   }
 
   add(waypoint: ObjectWaypoint) {
@@ -115,4 +124,7 @@ export class WaypointService {
     return (this.flightDataService.sendWaypoint(temp));
 
   }
+
+
+ 
 }

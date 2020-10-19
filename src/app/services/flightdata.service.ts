@@ -39,7 +39,7 @@ export class FlightdataService {
   }
   
   getMission(): Observable <ObjectWaypoints[]>{
-    //console.log("client asking data")
+    console.log("client asking data")
     return this.httpClient.get<ObjectWaypoints[]>(this.url+'api/waypoints')
     .pipe(map(res => { return res }));
   }
