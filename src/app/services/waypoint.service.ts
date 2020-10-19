@@ -50,7 +50,7 @@ export class WaypointService {
         this.waypoints.push([command,param1,param2,param3,param4,x,y,z,target_system,target_component,frame,mission_type,current,autocontinue]);
       }
       console.log(this.waypoints)
-      this.startStreaming = true;
+      //this.startStreaming = true;
     },500); 
   }
   
