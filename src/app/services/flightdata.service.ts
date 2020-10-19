@@ -9,8 +9,6 @@ import { FlightRecord } from '../models/flightrecord';
 import { parameterRecords } from '../models/parameterRecords';
 import { ObjectWaypoints } from '../models/ObjectWaypoint';
 import { btnParamStatus } from '../models/btnParamStatus';
-
-
 @Injectable({
   providedIn: 'root'
 })

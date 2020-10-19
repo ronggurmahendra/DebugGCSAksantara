@@ -16,11 +16,11 @@ let distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 
 let mLabDB = "mongodb+srv://aksantara:asusrampage6@aksantara-vskbl.mongodb.net/aksantara?retryWrites=true&w=majority";
-let localDB = "mongodb://localhost:27017/aksantara";
+let newDB = "mongodb://aksantara:asusrampage6@aksantara-shard-00-00.vskbl.mongodb.net:27017,aksantara-shard-00-01.vskbl.mongodb.net:27017,aksantara-shard-00-02.vskbl.mongodb.net:27017/akromiafif?ssl=true&replicaSet=Aksantara-shard-0&authSource=admin&retryWrites=true&w=majority";
 
 try {
     // Lakukan koneksi ke database
-    mongoose.connect(mLabDB, { useUnifiedTopology: true, useNewUrlParser: true});
+    mongoose.connect(newDB, { useUnifiedTopology: true, useNewUrlParser: true});
 } catch (error) {
     console.log(error);
 }
