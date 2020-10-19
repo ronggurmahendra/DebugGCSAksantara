@@ -50,7 +50,7 @@ export class ParameterComponent implements OnInit {
         console.log(response);
       });
 
-    this.flightDataService.sendBtnParamStatus({ getParamBtn: false, sendParamBtn: this.sendParamBtn })        
+    this.flightDataService.sendBtnStatus({ getParamBtn: false, sendParamBtn: this.sendParamBtn, getWaypointBtn: false, sendWaypointBtn: false })        
       .subscribe(response => {
         console.log(response);
       });
@@ -59,7 +59,7 @@ export class ParameterComponent implements OnInit {
   public getParameters() {
     this.getParamBtn = true;
 
-    this.flightDataService.sendBtnParamStatus({ getParamBtn: this.getParamBtn, sendParamBtn: false })        
+    this.flightDataService.sendBtnStatus({ getParamBtn: this.getParamBtn, sendParamBtn: false, getWaypointBtn: false, sendWaypointBtn: false })        
       .subscribe(response => {
         console.log(response);
       });

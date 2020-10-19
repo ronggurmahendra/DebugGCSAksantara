@@ -35,6 +35,11 @@ export class FlightdataService {
     return this.httpClient.get<btnParamStatus>(this.url+'api/btnparams')
       .pipe(map(res => { return res }));
   }
+
+  getBtnWaypointStatus(): Observable<btnParamStatus> {
+    return this.httpClient.get<btnParamStatus>(this.url+'api/btnparams')
+      .pipe(map(res => { return res }));
+  }
   
   getMission(): Observable <ObjectWaypoints[]>{
     //console.log("client asking data")
@@ -63,7 +68,7 @@ export class FlightdataService {
     return this.sendData('waypoint', data);
   }
 
-  sendBtnParamStatus(data) {
+  sendBtnStatus(data) {
     return this.sendData('btnparam', data);
   }
 }
