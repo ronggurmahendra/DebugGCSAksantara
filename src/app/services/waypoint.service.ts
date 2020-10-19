@@ -84,7 +84,7 @@ export class WaypointService {
     return this.changingHome;
   }
   changingHomeProperties(waypoint: ObjectWaypoint){
-    this.home = waypoint;
+    this.waypoints[0] = waypoint;
   }
 
   add(waypoint: ObjectWaypoint) {
