@@ -30,15 +30,8 @@ export class WaypointService {
       objectWaypoints = flightDataService.getMission().subscribe(response => 
         this.temp = response
       )   
-      //this.temp = this.temp.children
-      //console.log(this.temp.children[1].command)
       this.waypoints = []
       for(let i = 0;i < this.temp.children.length ;i++){
-        //console.log(this.temp.children[i].command)
-        //console.log("arrTotal:",arrTotal)
-        //let latitude = arrTotal [i][1];
-        //let longitude = arrTotal [i][0];
-        
         let command = this.temp.children[i].command;
         let param1 = this.temp.children[i].param1;
         let param2 = this.temp.children[i].param2;
@@ -58,8 +51,6 @@ export class WaypointService {
       }
       console.log(this.waypoints)
       this.startStreaming = true;
-      //this.startingStream()
-      console.log("startstreaming : ",this.startStreaming)
     },500); 
   }
   
