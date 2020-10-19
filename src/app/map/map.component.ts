@@ -261,10 +261,15 @@ export class MapComponent implements OnInit {
     /* CODINGAN AFIF */
     function collectWaypoint() {
         // buat ngirim waypoint ke server 
-        waypointService.sendWaypoint()
+        if (waypointService.getStartStreaming()){
+          console.log("sending waypoint")
+          waypointService.sendWaypoint()
           .subscribe(response => {
             console.log(response);
           });
+        }else{
+          console.log("cannot start sending waypoint")
+        }
     } 
     /* ------------ */
 

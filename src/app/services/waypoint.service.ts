@@ -15,18 +15,19 @@ import { map } from 'rxjs/operators';
 })
 
 export class WaypointService {
-  public waypoints;
+  public waypoints = [];
   //public home
   public changingHome = false;
-
+  public startStreaming = false;
   constructor(private httpClient: HttpClient, private flightDataService: FlightdataService) {
     console.log('Initialize WaypoinitService')
     //public waypoints = new any[]
+    //var tempstartStreaming = this.startStreaming
     var objectWaypoints: Observable<any[]>;
     setInterval(function streamMission(){
       //console.log('retrieving data from database')
       var temp : ObjectWaypoint[]
-      this.objectWaypoints = flightDataService.getMission().subscribe(response => 
+      objectWaypoints = flightDataService.getMission().subscribe(response => 
         this.temp = response
       )   
       //this.temp = this.temp.children
@@ -55,11 +56,20 @@ export class WaypointService {
         
         this.waypoints.push([command,param1,param2,param3,param4,x,y,z,target_system,target_component,frame,mission_type,current,autocontinue]);
       }
-      //console.log(this.waypoints)
+      console.log(this.waypoints)
+      this.startStreaming = true;
+      //this.startingStream()
+      console.log("startstreaming : ",this.startStreaming)
     },500); 
   }
   
-  
+  getStartStreaming(){
+    console.log(this.startStreaming)
+    return this.startStreaming;
+  }
+  startingStream(){
+    this.startStreaming = true;
+  }
 
   changeHome(){
     if (this.changingHome == false){
@@ -74,7 +84,7 @@ export class WaypointService {
     return this.changingHome;
   }
   changingHomeProperties(waypoint: ObjectWaypoint){
-    this.waypoints[0] = waypoint;
+    this.home = waypoint;
   }
 
   add(waypoint: ObjectWaypoint) {
