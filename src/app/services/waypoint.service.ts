@@ -15,20 +15,52 @@ import { map } from 'rxjs/operators';
 })
 
 export class WaypointService {
-  
-  constructor(private httpClient: HttpClient, private flightDataService: FlightdataService) {
-    console.log('Initialize WaypoinitService')
-    
-    setInterval(function streamMission(){
-      console.log('retrieving data from database')
-      var objectWaypoints = flightDataService.getMission();
-      
-    },300); 
-  }
-  
   public waypoints = [];
   public home
   public changingHome = false;
+
+  constructor(private httpClient: HttpClient, private flightDataService: FlightdataService) {
+    console.log('Initialize WaypoinitService')
+    //public waypoints = new any[]
+    var objectWaypoints: Observable<any[]>;
+    setInterval(function streamMission(){
+      //console.log('retrieving data from database')
+      var temp : ObjectWaypoint[]
+      this.objectWaypoints = flightDataService.getMission().subscribe(response => 
+        this.temp = response
+      )   
+      //this.temp = this.temp.children
+      //console.log(this.temp.children[1].command)
+      this.waypoints = []
+      for(let i = 0;i < this.temp.children.length ;i++){
+        //console.log(this.temp.children[i].command)
+        //console.log("arrTotal:",arrTotal)
+        //let latitude = arrTotal [i][1];
+        //let longitude = arrTotal [i][0];
+        
+        let command = this.temp.children[i].command;
+        let param1 = this.temp.children[i].param1;
+        let param2 = this.temp.children[i].param2;
+        let param3 = this.temp.children[i].param3;
+        let param4 = this.temp.children[i].param4;
+        let x = this.temp.children[i].x;
+        let y = this.temp.children[i].y;
+        let z = this.temp.children[i].z;
+        let target_system = this.temp.children[i].target_system;
+        let target_component = this.temp.children[i].target_component;
+        let frame = this.temp.children[i].frame;
+        let mission_type = this.temp.children[i].mission_type;
+        let current = this.temp.children[i].current;
+        let autocontinue = this.temp.children[i].autocontinue;
+        
+        this.waypoints.push([command,param1,param2,param3,param4,x,y,z,target_system,target_component,frame,mission_type,current,autocontinue]);
+      }
+      //console.log(this.waypoints)
+    },500); 
+  }
+  
+  
+
   changeHome(){
     if (this.changingHome == false){
       this.changingHome = true;
@@ -42,7 +74,7 @@ export class WaypointService {
     return this.changingHome;
   }
   changingHomeProperties(waypoint: ObjectWaypoint){
-    this.home = waypoint;
+    this.waypoints[0] = waypoint;
   }
 
   add(waypoint: ObjectWaypoint) {
@@ -120,7 +152,7 @@ export class WaypointService {
 
       temp.push({command,param1,param2,param3,param4,x,y,z,target_system,target_component,frame,mission_type,current,autocontinue});
     }
-
+    console.log("mssion sent: ",temp.length)
     return (this.flightDataService.sendWaypoint(temp));
 
   }
