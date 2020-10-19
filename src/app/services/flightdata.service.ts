@@ -16,10 +16,8 @@ import { btnParamStatus } from '../models/btnParamStatus';
 })
 
 export class FlightdataService {
-
   private url = "https://aksantara3301.herokuapp.com/";
-  //private url = "http://localhost:8080/";
-
+  // private url = "http://localhost:8080/";
 
   constructor(private httpClient: HttpClient) { console.log('Initialize flightdata Service')}
 
@@ -37,13 +35,17 @@ export class FlightdataService {
     return this.httpClient.get<btnParamStatus>(this.url+'api/btnparams')
       .pipe(map(res => { return res }));
   }
+
+  getBtnWaypointStatus(): Observable<btnParamStatus> {
+    return this.httpClient.get<btnParamStatus>(this.url+'api/btnparams')
+      .pipe(map(res => { return res }));
+  }
   
   getMission(): Observable <ObjectWaypoints[]>{
     console.log("client asking data")
     return this.httpClient.get<ObjectWaypoints[]>(this.url+'api/waypoints')
     .pipe(map(res => { return res }));
   }
-
 
   sendData(url, data) {
     let headers = new HttpHeaders();
@@ -66,7 +68,7 @@ export class FlightdataService {
     return this.sendData('waypoint', data);
   }
 
-  sendBtnParamStatus(data) {
+  sendBtnStatus(data) {
     return this.sendData('btnparam', data);
   }
 }

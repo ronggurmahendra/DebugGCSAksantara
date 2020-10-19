@@ -96,7 +96,8 @@ router.get("/waypoints", (req, res, next) => {
         if(err){
             console.log("error sending mission")
         }else {
-            res.json(waypoints)
+            let len = waypoints.length-1
+            res.json(waypoints[len])
         }
     })
     // Waypoint.watch()
@@ -138,15 +139,19 @@ router.get("/parameters", (req, res, next) => {
 /* BUAT statusBtnParameter */
 let getParamBtn = false;
 let sendParamBtn = false;
+let getWaypointBtn = false;
+let sendWaypointBtn = false;
 
 router.post("/btnparam", (req, res, next) => {
     getParamBtn = req.body.getParamBtn;
     sendParamBtn = req.body.sendParamBtn;
-    res.json({ success: `Success to change state getParamBtn to: ${getParamBtn} and sendParamBtn to : ${sendParamBtn}` });
+    getWaypointBtn = req.body.getWaypointBtn;
+    sendWaypointBtn = req.body.sendWaypointBtn;
+    res.json({ success: `(Success) button current status getParamBtn = ${getParamBtn}, sendParamBtn = ${sendParamBtn}, getWaypointBtn = ${getWaypointBtn}, sendWaypointBtn = ${sendWaypointBtn}` });
 });
 
 router.get("/btnparams", (req, res, next) => {
-    res.json({ getParamBtn: getParamBtn, sendParamBtn: sendParamBtn });
+    res.json({ getParamBtn: getParamBtn, sendParamBtn: sendParamBtn, getWaypointBtn: getWaypointBtn, sendWaypointBtn: sendWaypointBtn });
 });
 /* BUAT statusBtnParameter */
 

@@ -3,7 +3,9 @@ const Schema = mongoose.Schema;
 
 const btnStatus = mongoose.Schema({
     getParamBtn: Boolean,
-    sendParamBtn: Boolean
+    sendParamBtn: Boolean,
+    getWaypointBtn: Boolean,
+    sendWaypointBtn: Boolean
 });
 
 const btnParamStatus = module.exports = mongoose.model('btnStatus', btnStatus);

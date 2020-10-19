@@ -56,17 +56,6 @@ export class MapComponent implements OnInit {
     this.initilizeMap(this.waypointService, this.MavlinkService, this.flightDataService,this.isMap)
     //this.waypointService.add(new ObjectWaypoint(16,0,10,0,1,107.5721, -6.9823,10,1,255,2,0,1,0));
   }
-  
-  /* CODINGAN AFIF */
-
-  collectWaypoint() {
-      // buat ngirim waypoint ke server 
-      this.waypointService.sendWaypoint()
-        .subscribe(response => {
-          console.log(response);
-        });
-  } 
-  /* ------------ */
 
   initilizeMap (waypointService, MavlinkService, flightDataService,OnMission) {
     var lenAwal = -1; //buar pas diinisialisasi dia pasti salah dan masuk ke refresh mission 
@@ -268,8 +257,19 @@ export class MapComponent implements OnInit {
       //console.log(wpFeature)
       waypointSource.addFeatures(wpFeature);
       wpFeature = [];
+      collectWaypoint();
     };
+
+    /* CODINGAN AFIF */
+    function collectWaypoint() {
+        // buat ngirim waypoint ke server 
+        waypointService.sendWaypoint()
+          .subscribe(response => {
+            console.log(response);
+          });
+    } 
+    /* ------------ */
+
   }
-  
 }
 
