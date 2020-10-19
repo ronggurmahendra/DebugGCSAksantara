@@ -19,41 +19,46 @@ export class WaypointService {
   //public home
   public changingHome = false;
   public startStreaming = false;
+
   constructor(private httpClient: HttpClient, private flightDataService: FlightdataService) {
     console.log('Initialize WaypoinitService')
     //public waypoints = new any[]
     //var tempstartStreaming = this.startStreaming
-    var objectWaypoints: Observable<any[]>;
-    setInterval(function streamMission(){
-      //console.log('retrieving data from database')
-      var temp : ObjectWaypoint[]
-      objectWaypoints = flightDataService.getMission().subscribe(response => 
-        this.temp = response
-      )   
-      this.waypoints = []
-      for(let i = 0;i < this.temp.children.length ;i++){
-        let command = this.temp.children[i].command;
-        let param1 = this.temp.children[i].param1;
-        let param2 = this.temp.children[i].param2;
-        let param3 = this.temp.children[i].param3;
-        let param4 = this.temp.children[i].param4;
-        let x = this.temp.children[i].x;
-        let y = this.temp.children[i].y;
-        let z = this.temp.children[i].z;
-        let target_system = this.temp.children[i].target_system;
-        let target_component = this.temp.children[i].target_component;
-        let frame = this.temp.children[i].frame;
-        let mission_type = this.temp.children[i].mission_type;
-        let current = this.temp.children[i].current;
-        let autocontinue = this.temp.children[i].autocontinue;
-        
-        this.waypoints.push([command,param1,param2,param3,param4,x,y,z,target_system,target_component,frame,mission_type,current,autocontinue]);
-      }
-      console.log(this.waypoints)
-      //this.startStreaming = true;
-    },500); 
+    //var objectWaypoints: Observable<any[]>;
+    //var startStreaming = this.startStreaming
+    setInterval(this.streamMission,500); 
   }
   
+  streamMission(startStreaming){
+    //console.log('retrieving data from database')
+    var temp : any
+    var wkkw = this.flightDataService.getMission().subscribe(response => 
+      temp = response
+    )   
+    
+    this.waypoints = []
+    for(let i = 0;i < temp.children.length ;i++){
+      let command = temp.children[i].command;
+      let param1 = temp.children[i].param1;
+      let param2 = temp.children[i].param2;
+      let param3 = temp.children[i].param3;
+      let param4 = temp.children[i].param4;
+      let x = temp.children[i].x;
+      let y = temp.children[i].y;
+      let z = temp.children[i].z;
+      let target_system = temp.children[i].target_system;
+      let target_component = temp.children[i].target_component;
+      let frame = temp.children[i].frame;
+      let mission_type = temp.children[i].mission_type;
+      let current = temp.children[i].current;
+      let autocontinue = temp.children[i].autocontinue;
+      
+      this.waypoints.push([command,param1,param2,param3,param4,x,y,z,target_system,target_component,frame,mission_type,current,autocontinue]);
+    }
+    console.log(this.waypoints)
+    this.startStreaming = true;
+  }
+
   getStartStreaming(){
     console.log(this.startStreaming)
     return this.startStreaming;

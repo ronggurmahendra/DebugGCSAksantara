@@ -167,7 +167,7 @@ export class MapComponent implements OnInit {
       }
       lenAwal = waypointService.getCoordinateArray().length
       
-    },100)
+    },500)
 
 
     function refreshMission() {
