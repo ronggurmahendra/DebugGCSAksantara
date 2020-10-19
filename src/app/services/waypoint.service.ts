@@ -15,8 +15,8 @@ import { map } from 'rxjs/operators';
 })
 
 export class WaypointService {
-  public waypoints = [];
-  public home
+  public waypoints;
+  //public home
   public changingHome = false;
 
   constructor(private httpClient: HttpClient, private flightDataService: FlightdataService) {
