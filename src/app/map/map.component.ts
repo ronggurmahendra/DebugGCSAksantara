@@ -167,13 +167,17 @@ export class MapComponent implements OnInit {
       }
       lenAwal = waypointService.getCoordinateArray().length
       
-    },500)
+    },1000)
 
 
     function refreshMission() {
-      //console.log("refreshingnWP");
+      
+      console.log("refreshingnWP");
+  
       var len = waypointService.getCoordinateArray().length;
-      //console.log(waypointService.getCoordinateArray());
+      //console.log(len)
+      console.log("at map:",waypointService.getCoordinateArray().length);
+      
       for(var i = 0; i< len; i++){
         //console.log(waypointService.getCoordinateArray()[i])
         var temp_waypoint = new Feature({
@@ -243,25 +247,22 @@ export class MapComponent implements OnInit {
             );
           };
       }
-      
-      //refresh source line
-      lineSource.clear()
-  
-      lineSource.addFeatures(lineFeature)
-      lineFeature = []
-      
-      //refresh source wp
+      //clear source wp
       waypointSource.clear();
-      //console.log(wpFeature)
+      lineSource.clear()
+      //refresh source wp
+      lineSource.addFeatures(lineFeature)
       waypointSource.addFeatures(wpFeature);
-      wpFeature = [];
+      console.log(wpFeature)
       collectWaypoint();
+      lineFeature = []
+      wpFeature = [];
     };
 
     /* CODINGAN AFIF */
     function collectWaypoint() {
         // buat ngirim waypoint ke server 
-        if (true){
+        if (waypointService.getStartStreaming()){
           console.log("sending waypoint")
           waypointService.sendWaypoint()
           .subscribe(response => {

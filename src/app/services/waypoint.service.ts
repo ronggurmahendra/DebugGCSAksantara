@@ -19,48 +19,56 @@ export class WaypointService {
   //public home
   public changingHome = false;
   public startStreaming = false;
-
+  public tempmission : any
   constructor(private httpClient: HttpClient, private flightDataService: FlightdataService) {
     console.log('Initialize WaypoinitService')
     //public waypoints = new any[]
     //var tempstartStreaming = this.startStreaming
     //var objectWaypoints: Observable<any[]>;
     //var startStreaming = this.startStreaming
-    setInterval(this.streamMission,500); 
+    setInterval(() => {this.streamMission(this.startStreaming, flightDataService)},1000); 
   }
   
-  streamMission(startStreaming){
+  streamMission(startStreaming, flightDataService){
     //console.log('retrieving data from database')
-    var temp : any
+    //let temp : ObjectWaypoint[]
     var wkkw = this.flightDataService.getMission().subscribe(response => 
-      temp = response
+      //console.log("response = ",response.children)
+      this.tempmission = response
     )   
     
-    this.waypoints = []
-    for(let i = 0;i < temp.children.length ;i++){
-      let command = temp.children[i].command;
-      let param1 = temp.children[i].param1;
-      let param2 = temp.children[i].param2;
-      let param3 = temp.children[i].param3;
-      let param4 = temp.children[i].param4;
-      let x = temp.children[i].x;
-      let y = temp.children[i].y;
-      let z = temp.children[i].z;
-      let target_system = temp.children[i].target_system;
-      let target_component = temp.children[i].target_component;
-      let frame = temp.children[i].frame;
-      let mission_type = temp.children[i].mission_type;
-      let current = temp.children[i].current;
-      let autocontinue = temp.children[i].autocontinue;
+    
+    console.log("count :",this.tempmission.children.length)
+    if (this.tempmission.children.length  > this.waypoints.length || 1){
+
+      this.waypoints = []
+      for(let i = 0;i < this.tempmission.children.length ;i++){
+        let command = this.tempmission.children[i].command;
+        let param1 = this.tempmission.children[i].param1;
+        let param2 = this.tempmission.children[i].param2;
+        let param3 = this.tempmission.children[i].param3;
+        let param4 = this.tempmission.children[i].param4;
+        let x = this.tempmission.children[i].x;
+        let y = this.tempmission.children[i].y;
+        let z = this.tempmission.children[i].z;
+        let target_system = this.tempmission.children[i].target_system;
+        let target_component = this.tempmission.children[i].target_component;
+        let frame = this.tempmission.children[i].frame;
+        let mission_type = this.tempmission.children[i].mission_type;
+        let current = this.tempmission.children[i].current;
+        let autocontinue = this.tempmission.children[i].autocontinue;
       
-      this.waypoints.push([command,param1,param2,param3,param4,x,y,z,target_system,target_component,frame,mission_type,current,autocontinue]);
+        this.waypoints.push([command,param1,param2,param3,param4,x,y,z,target_system,target_component,frame,mission_type,current,autocontinue]);
+      }
+      //console.log(this.waypoints)
+      
     }
-    console.log(this.waypoints)
     this.startStreaming = true;
+    //console.log(this.waypoints)
   }
 
   getStartStreaming(){
-    console.log(this.startStreaming)
+    //console.log(this.startStreaming)
     return this.startStreaming;
   }
   startingStream(){
@@ -107,21 +115,35 @@ export class WaypointService {
   }
 
   getCoordinateOn(n:number){
-    return this.waypoints[n].getCoordinate()
+    return [this.waypoints[n].y,this.waypoints[n].x]
   }
-
+//[this.y,this.x]
   getCoordinateArray(){
-    let temp: number[][] = [];
+    let tempcoor: number[][] = [];
     for (var i = 0; i < (this.waypoints.length); i++){
-      temp.push(this.waypoints[i].getCoordinate() );
+      tempcoor.push([this.waypoints[i].y,this.waypoints[i].x] );
     }
-    //console.log(temp);
-    return temp
+    //console.log("at service",tempcoor.length,this.waypoints.length);
+    return tempcoor
   }
   getAllArray(){
     let temp: number[][] = [];
     for (var i = 0; i < (this.waypoints.length); i++){
-      temp.push(this.waypoints[i].getAll() );
+      temp.push([this.waypoints[i].command, 
+        this.waypoints[i].param1,
+        this.waypoints[i].param2,
+        this.waypoints[i].param3,
+        this.waypoints[i].param4,
+        this.waypoints[i].x,
+        this.waypoints[i].y,
+        this.waypoints[i].z,
+        this.waypoints[i].target_system,
+        this.waypoints[i].target_component,
+        this.waypoints[i].frame,
+        this.waypoints[i].mission_type,
+        this.waypoints[i].current,
+        this.waypoints[i].autocontinue
+    ]);
     }  
     //console.log(temp);
     return temp
